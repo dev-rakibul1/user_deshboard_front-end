@@ -23,8 +23,32 @@ export const taskApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.task],
     }),
+
+    // Get single task
+    getSingleTask: build.query({
+      query: (id: string) => ({
+        url: `${TASK_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.task],
+    }),
+
+    // Update api
+    updateTask: build.mutation({
+      query: (data) => ({
+        url: `${TASK_URL}/${data?.id}/`,
+        method: "PATCH",
+        data: data.body,
+      }),
+      invalidatesTags: [tagTypes.task],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useAddANewTaskMutation, useGetAllTaskQuery } = taskApi;
+export const {
+  useAddANewTaskMutation,
+  useGetAllTaskQuery,
+  useGetSingleTaskQuery,
+  useUpdateTaskMutation,
+} = taskApi;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useGetAllTaskQuery } from "@/redux/api/taskApi/taskApi";
+import Link from "next/link";
 import { useState } from "react";
 
 interface Task {
@@ -18,8 +19,6 @@ const TaskList = () => {
     isError,
   } = useGetAllTaskQuery({ limit: 100 });
 
-  console.log(taskData);
-
   const [filterPriority, setFilterPriority] = useState<string>("");
   const [filterStatus, setFilterStatus] = useState<string>("");
 
@@ -27,14 +26,17 @@ const TaskList = () => {
   const tasks: Task[] = taskData?.data || [];
 
   // Filter logic
-  const filteredTasks = tasks?.filter((task) => {
+  const filteredTasks = tasks.filter((task) => {
     const matchesPriority = filterPriority
-      ? task.priority === filterPriority
+      ? task.priority.toLowerCase() === filterPriority.toLowerCase()
       : true;
-    const matchesStatus = filterStatus ? task.status === filterStatus : true;
+    const matchesStatus = filterStatus
+      ? task.status.toLowerCase() === filterStatus.toLowerCase()
+      : true;
     return matchesPriority && matchesStatus;
   });
 
+  // Handle loading and error states
   if (isLoading) {
     return <div className="p-4 text-center">Loading tasks...</div>;
   }
@@ -94,9 +96,11 @@ const TaskList = () => {
                 <td className="border p-2">{task.priority}</td>
                 <td className="border p-2">{task.status}</td>
                 <td className="border p-2">
-                  <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">
-                    Edit
-                  </button>
+                  <Link href={`/manage-task/edit/${task.id}`}>
+                    <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">
+                      Edit
+                    </button>
+                  </Link>
                   <button className="bg-red-500 text-white px-2 py-1 rounded">
                     Delete
                   </button>
