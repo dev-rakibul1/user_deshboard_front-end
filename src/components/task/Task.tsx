@@ -1,3 +1,5 @@
+"use client";
+
 import { useGetAllTaskQuery } from "@/redux/api/taskApi/taskApi";
 import { useState } from "react";
 

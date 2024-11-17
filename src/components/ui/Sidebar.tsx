@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FC } from "react";
 
 import { VscChromeClose } from "react-icons/vsc";
@@ -26,20 +27,27 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, toggleSidebar }) => {
       </div>
 
       <nav className="flex-1">
-        <a
-          href="#"
+        <Link
+          href="/home"
           className="block p-4 hover:bg-gray-700 transition"
           onClick={onClose}
         >
           Home
-        </a>
-        <a
-          href="#"
+        </Link>
+        <Link
+          href="/manage-task"
           className="block p-4 hover:bg-gray-700 transition"
           onClick={onClose}
         >
-          Settings
-        </a>
+          Manage Task
+        </Link>
+        <Link
+          href="/create-task"
+          className="block p-4 hover:bg-gray-700 transition"
+          onClick={onClose}
+        >
+          Create task
+        </Link>
       </nav>
     </div>
   );
