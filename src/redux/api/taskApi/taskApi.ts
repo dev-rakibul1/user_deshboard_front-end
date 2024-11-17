@@ -42,6 +42,15 @@ export const taskApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.task],
     }),
+
+    // Delete api
+    deleteTask: build.mutation({
+      query: (id: string) => ({
+        url: `${TASK_URL}/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.task],
+    }),
   }),
   overrideExisting: false,
 });
@@ -51,4 +60,5 @@ export const {
   useGetAllTaskQuery,
   useGetSingleTaskQuery,
   useUpdateTaskMutation,
+  useDeleteTaskMutation,
 } = taskApi;

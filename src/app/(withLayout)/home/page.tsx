@@ -1,5 +1,11 @@
+import Chart from "@/components/chart/Chart";
+
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <div>
+      <Chart />
+    </div>
+  );
 };
 
 export default HomePage;

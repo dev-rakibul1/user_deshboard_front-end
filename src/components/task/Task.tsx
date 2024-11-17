@@ -1,6 +1,9 @@
 "use client";
 
 import { useGetAllTaskQuery } from "@/redux/api/taskApi/taskApi";
+import CustomModal from "@/shared/DeleteModal";
+import { ITaskResponse } from "@/types";
+import { formatDate } from "@/utils/dateFormat";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -13,6 +16,8 @@ interface Task {
 }
 
 const TaskList = () => {
+  // ----------------------------
+
   const {
     data: taskData,
     isLoading,
@@ -21,6 +26,8 @@ const TaskList = () => {
 
   const [filterPriority, setFilterPriority] = useState<string>("");
   const [filterStatus, setFilterStatus] = useState<string>("");
+  const [deleteData, setDeleteData] = useState<ITaskResponse>(taskData);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // Handle query result and fallback
   const tasks: Task[] = taskData?.data || [];
@@ -47,8 +54,23 @@ const TaskList = () => {
     );
   }
 
+  const handleDelete = (data: ITaskResponse) => {
+    setDeleteData(data);
+    // console.log(data);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="p-4">
+      {/* Modal */}
+
+      <CustomModal
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
+        // @ts-ignore
+        data={deleteData}
+      />
+
       {/* Header */}
       <h1 className="text-xl font-bold mb-4">Task Management</h1>
 
@@ -92,7 +114,7 @@ const TaskList = () => {
             {filteredTasks.map((task) => (
               <tr key={task.id} className="hover:bg-gray-50">
                 <td className="border p-2">{task.name}</td>
-                <td className="border p-2">{task.createdAt}</td>
+                <td className="border p-2">{formatDate(task.createdAt)}</td>
                 <td className="border p-2">{task.priority}</td>
                 <td className="border p-2">{task.status}</td>
                 <td className="border p-2">
@@ -101,7 +123,11 @@ const TaskList = () => {
                       Edit
                     </button>
                   </Link>
-                  <button className="bg-red-500 text-white px-2 py-1 rounded">
+                  <button
+                    // @ts-ignore
+                    onClick={() => handleDelete(task)}
+                    className="bg-red-500 text-white px-2 py-1 rounded"
+                  >
                     Delete
                   </button>
                 </td>
