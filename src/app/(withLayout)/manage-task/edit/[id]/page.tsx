@@ -16,13 +16,13 @@ const EditTask = () => {
     return <div>Error: Invalid task ID</div>; // Handle error gracefully
   }
 
-  const { data } = useGetSingleTaskQuery(id);
+  const { data, isLoading } = useGetSingleTaskQuery(id);
 
   const updateData = data?.data;
 
   return (
     <div>
-      <TaskEditForm data={updateData} />
+      <TaskEditForm data={updateData} loading={isLoading} />
     </div>
   );
 };

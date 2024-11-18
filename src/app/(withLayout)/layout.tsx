@@ -25,7 +25,7 @@ function DashboardLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col bg-gray-100">
         <Header toggleSidebar={toggleSidebar} />
-        <div className="p-3">{children}</div>
+        <div className="p-3 overflow-y-auto">{children}</div>
       </div>
     </div>
   );
