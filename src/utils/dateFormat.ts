@@ -1,14 +1,13 @@
 export const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
 
-  const options: Intl.DateTimeFormatOptions = {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  };
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = date.toLocaleString("en-US", { month: "short" }); // Get month name
+  const year = date.getFullYear();
 
-  return new Intl.DateTimeFormat("en-US", options).format(date);
+  const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const ampm = date.getHours() >= 12 ? "PM" : "AM";
+
+  return `${day} ${month}, ${year} | ${hours}:${minutes} ${ampm}`;
 };

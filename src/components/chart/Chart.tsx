@@ -18,7 +18,10 @@ import {
 } from "recharts";
 
 const Chart: React.FC = () => {
-  const { data: task, isLoading } = useGetAllTaskQuery({ limit: 100 });
+  const { data: task, isLoading } = useGetAllTaskQuery({
+    pollingInterval: 15000,
+    refetchOnMountOrArgChange: true,
+  });
 
   // Safeguard tasks
   const tasks = task?.data || [];
@@ -57,12 +60,14 @@ const Chart: React.FC = () => {
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        <p className="p-4 text-center flex items-center justify-center min-h-[80vh]">
+          Loading...
+        </p>
       ) : (
-        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 z-0">
+        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 z-0 mt-16">
           {/* Pie Chart - Task Distribution by Priority */}
           <div className="flex flex-col items-center justify-center w-full min-h-[50vh] z-0">
-            <h2 className="text-xl font-semibold mb-4 text-center">
+            <h2 className="text-xl font-medium mb-4 text-center">
               Task Distribution by Priority
             </h2>
             <ResponsiveContainer width="100%" height={300}>
@@ -90,7 +95,7 @@ const Chart: React.FC = () => {
 
           {/* Bar Chart - Task Distribution by Status */}
           <div className="flex flex-col items-center w-full z-0 justify-center min-h-[50vh]">
-            <h2 className="text-xl font-semibold mb-4 text-center">
+            <h2 className="text-xl font-medium mb-4 text-center">
               Task Distribution by Status
             </h2>
             <ResponsiveContainer width="100%" height={300}>

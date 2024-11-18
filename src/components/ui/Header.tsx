@@ -9,7 +9,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
   return (
     <header className="bg-blue-100 shadow p-4 flex md:flex-none items-center justify-between lg:pl-64">
       <div className="lg:flex justify-end items-center w-full">
-        <h1 className="text-xl font-bold">Dashboard</h1>
+        <h1 className="text-xl font-medium">Dashboard</h1>
       </div>
 
       <button

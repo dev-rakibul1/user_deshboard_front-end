@@ -18,13 +18,13 @@ const TaskForm: React.FC = () => {
     resolver: yupResolver(TaskSchema),
   });
 
-  const [addATask] = useAddANewTaskMutation();
+  const [addATask, { isLoading }] = useAddANewTaskMutation();
 
   const onSubmit: SubmitHandler<ITask> = async (data) => {
     try {
       const res = await addATask(data);
       toast.success("Task created successfully!"); // Success toast
-      console.log("Server Response:", res);
+      // console.log("Server Response:", res);
 
       reset(); // Reset the form fields
     } catch (error) {
@@ -34,17 +34,23 @@ const TaskForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4 bg-white rounded-md shadow-md">
-      <h2 className="text-xl font-bold mb-4">Task Form</h2>
+    <div
+      className=" max-w-lg mx-auto p-4 bg-white rounded-md shadow-md"
+      style={{ margin: "50px auto" }}
+    >
+      <h2 className="text-xl font-medium mb-4 text-center">
+        Create a new task
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Name */}
         <div>
-          <label htmlFor="name" className="block font-medium mb-1">
+          <label htmlFor="name" className="block font-medium mb-1 ">
             Task Name:
           </label>
           <input
             type="text"
             id="name"
+            placeholder="Task name"
             className="w-full border rounded px-3 py-2"
             {...register("name")}
           />
@@ -99,7 +105,7 @@ const TaskForm: React.FC = () => {
           type="submit"
           className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
-          Submit Task
+          {isLoading ? "Loading..." : "Submit Task"}
         </button>
       </form>
     </div>

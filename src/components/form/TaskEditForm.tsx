@@ -34,7 +34,7 @@ const TaskEditForm = ({ data }: Props) => {
     }
   }, [data, reset]);
 
-  const [updateTask] = useUpdateTaskMutation();
+  const [updateTask, { isLoading }] = useUpdateTaskMutation();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<ITask> = async (formData) => {
@@ -60,8 +60,14 @@ const TaskEditForm = ({ data }: Props) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4 bg-white rounded-md shadow-md">
-      <h2 className="text-xl font-bold mb-4">Edit Task</h2>
+    <div
+      className="max-w-lg mx-auto p-4 bg-white rounded-md shadow-md"
+      style={{ margin: "50px auto" }}
+    >
+      <div className="text-center mb-5">
+        <h2 className="text-xl font-medium">Edit Task</h2>
+        <p className="mb-0 text-pink-800">{data?.name}</p>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label htmlFor="name" className="block font-medium mb-1">
@@ -119,7 +125,7 @@ const TaskEditForm = ({ data }: Props) => {
           type="submit"
           className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
-          Update Task
+          {isLoading ? "Updating..." : "Update Task"}
         </button>
       </form>
     </div>
