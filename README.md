@@ -55,7 +55,8 @@ This project is a full-stack application featuring a modern, responsive task man
   "id": "ef62cc71-69c5-4e74-a9cd-6679aaad7f57",
   "name": "ABC Task",
   "priority": "HIGH",
-  "status": "COMPLETED"
+  "status": "COMPLETED",
+  "createdAt": "2024-11-18T09:08:32.560Z"
 }
 ```
 
